@@ -204,7 +204,7 @@ type InternalCell = {
   label: string;
   variant: NodeVariant;
   sequence: number;
-  links?: BoardLink[];
+  links: BoardLink[];
 };
 
 function buildBoardCells(): Map<string, InternalCell> {
@@ -244,6 +244,7 @@ function buildBoardCells(): Map<string, InternalCell> {
       label,
       variant,
       sequence: sequenceCounter,
+      links: [],
     });
     sequenceCounter++;
   }
@@ -278,6 +279,7 @@ function buildBoardCells(): Map<string, InternalCell> {
               ? 'point'
               : 'basic',
         sequence: sequenceCounter,
+        links: [],
       });
 
       if (isPoint && extraPointsAssigned < EXTRA_POINT_COUNT) {
