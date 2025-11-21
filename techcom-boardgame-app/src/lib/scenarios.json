@@ -1,0 +1,293 @@
+[
+  {
+    "id": "scenario-1",
+    "title": "Safety vs. Schedule Pressure",
+    "emoji": "⏳",
+    "description": "You are the lead engineer on a new pedestrian bridge project. During the final inspection, your team discovers a critical structural flaw in a key supporting beam that could lead to collapse under high stress (e.g., during a severe storm or a major public event). Fixing the flaw will require a two-month delay and significantly increase the project cost, incurring a $2 million penalty as per the contract. Your project manager urges you to sign off, arguing that the flaw is likely minor and the chance of failure is statistically low, pressuring you not to jeopardize the company's reputation and finances.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Immediately halt construction/opening and formally report the critical flaw to the client and your company's senior management. Recommend the necessary redesign and repair, documenting all findings.",
+        "evaluation": "Excellent. Upholds the primary ethical duty to protect the public safety and welfare, regardless of cost or schedule.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Agree to sign off on the structure, but secretly draft a letter to your superior and the client after the fact, documenting your concerns and assigning liability to the construction team/project manager.",
+        "evaluation": "Poor. You knowingly allow a dangerous structure to open, violating public trust. The documentation is an inadequate, self-serving attempt to dodge responsibility.",
+        "points": -5
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Conduct a second, independent, and thorough analysis with a different team to verify the criticality of the flaw before making a final decision, but keep the initial findings confidential for now.",
+        "evaluation": "Fair. It shows a commitment to certainty (due diligence) but risks delaying the necessary safety action and potentially covers up the initial finding temporarily.",
+        "points": 3
+      }
+    ]
+  },
+  {
+    "id": "scenario-2",
+    "title": "Whistleblowing on Environmental Non-Compliance",
+    "emoji": "🌳",
+    "description": "You are a chemical engineer working for a manufacturing plant. You discover that your company is routinely dumping untreated wastewater into a nearby river late at night, in violation of local and federal environmental regulations, to save money on treatment costs. You first report this to your immediate supervisor, who tells you to \"mind your own business\" and that \"everyone does it.\" You know this pollution is harming the local ecosystem and potentially the downstream water supply.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Resign immediately, citing the company's unethical and illegal practices in your exit interview, but take no further action.",
+        "evaluation": "Poor. While you refuse to participate, you fail in the professional duty to protect the public and stop an ongoing illegal act.",
+        "points": -2
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Follow the company's internal reporting chain (even if it's resistant) and, if no action is taken, anonymously report the violation with documented evidence to the relevant environmental protection agency.",
+        "evaluation": "Excellent. Follows the chain of command first, then fulfills the duty to the public interest by escalating the matter to external authorities.",
+        "points": 10
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Continue working but discreetly gather evidence (photos, internal memos, test results) and use it to threaten your supervisor into changing the practice and giving you a promotion/raise.",
+        "evaluation": "Bad. Using the discovery for personal gain constitutes extortion and an abuse of professional position.",
+        "points": -15
+      }
+    ]
+  },
+  {
+    "id": "scenario-3",
+    "title": "Data Integrity and Client Trust",
+    "emoji": "📈",
+    "description": "You are a data scientist hired by a tech startup to validate the performance claims of their new AI-powered investment software. You find that the software's claimed 90% accuracy rate is actually closer to 65% and that the published marketing results have been significantly \"cherry-picked\" and manipulated. The CEO informs you that the company is about to close a major funding round based on these inflated metrics and that revealing the truth would bankrupt the company.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Adjust your report to reflect the 65% accuracy rate accurately, but include a paragraph suggesting \"future optimization potential\" to mitigate the negative impact, hoping the CEO will still find a way to proceed.",
+        "evaluation": "Fair. You uphold professional truthfulness, but the added context is a weak attempt to compromise, potentially still misleading investors.",
+        "points": 4
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Refuse to submit a fraudulent report. State clearly that you cannot compromise the integrity of the data and offer to help the CEO explain the actual performance honestly to the investors.",
+        "evaluation": "Excellent. Upholds the duty of truthfulness, professional integrity, and honesty in reporting data and facts.",
+        "points": 10
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Edit the report to show the 90% figure as requested, rationalizing that saving the company and its employees' jobs is a greater ethical good than minor data inflation.",
+        "evaluation": "Bad. You actively engage in fraudulent misrepresentation, harming potential investors and violating the fundamental principle of honesty.",
+        "points": -10
+      }
+    ]
+  },
+  {
+    "id": "scenario-4",
+    "title": "Conflict of Interest and Bidding",
+    "emoji": "💸",
+    "description": "You are a senior civil engineer involved in reviewing bids for a major municipal water project. Your sibling's construction company submits a bid that is technically sound and slightly lower than the next competitor. You have not disclosed your familial relationship because you believe you can remain objective. Another engineer raises a question about the relationship, and you realize you should have disclosed it earlier.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Disclose the familial relationship immediately to the selection committee and recuse yourself entirely from the review process related to that specific bid.",
+        "evaluation": "Excellent. Properly manages the conflict of interest by removing yourself from the decision, ensuring an objective and fair bidding process.",
+        "points": 8
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Continue with the review and vote for your sibling's bid, arguing that it is the best one and that you have a right to your opinion and vote.",
+        "evaluation": "Bad. You prioritize a personal interest over the appearance of fairness, leading to a biased decision and violating conflict-of-interest policies.",
+        "points": -8
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Disclose the relationship but state that you will only participate in the technical evaluation of all bids, abstaining from the final scoring or voting.",
+        "evaluation": "Fair. While partial recusal is better than none, the appearance of a conflict remains, making full recusal the more ethically sound choice.",
+        "points": 5
+      }
+    ]
+  },
+  {
+    "id": "scenario-5",
+    "title": "Software License Compliance",
+    "emoji": "💻",
+    "description": "You are managing a team of 50 software developers. To save costs, your department head instructed you to purchase licenses for only 30 copies of an expensive, specialized engineering software, with the expectation that developers will \"share\" or use unlicensed copies when necessary. Audits are rare, but if caught, the company could face massive fines and legal action.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Secretly purchase the remaining 20 licenses out of your project's contingency budget without informing your department head, effectively correcting the compliance issue.",
+        "evaluation": "Fair. You solve the ethical and legal problem but go against your superior's direction and misuse contingency funds.",
+        "points": 4
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Document your concern in an email to your department head and the company's legal counsel, stating that you cannot manage the team under conditions that require illegal use of software, demanding the full purchase.",
+        "evaluation": "Excellent. Upholds legal compliance and professional responsibility, refusing to participate in illegal activity and creating an official record.",
+        "points": 9
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Carry on with the 30 licenses, advising your team members to be careful and only install the software on their computers right before they need to use it.",
+        "evaluation": "Bad. You knowingly perpetuate illegal activity (software piracy/licensing violation) and encourage your team to engage in deceit.",
+        "points": -7
+      }
+    ]
+  },
+  {
+    "id": "scenario-6",
+    "title": "Project Transparency and Failure",
+    "emoji": "💥",
+    "description": "You are a mechanical engineer whose newly designed industrial robot arm has failed spectacularly during client testing, causing significant property damage but no injuries. An internal review suggests the failure was due to an unforeseen fatigue issue in a non-critical component. Your CEO proposes telling the client that the failure was due to \"operator error and unforeseen external circumstances\" to protect the company's insurance premiums and reputation.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Agree with the CEO's proposal and draft a report that places the blame on the client's operating procedures.",
+        "evaluation": "Bad. You actively lie to a client, evade professional responsibility, and hide a design flaw that could cause future harm.",
+        "points": -12
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Insist on a full, factual, and transparent report to the client detailing the technical cause (the fatigue issue) and propose a clear plan for redesign, compensation, and repair.",
+        "evaluation": "Excellent. Upholds truthfulness, transparency, and professional accountability.",
+        "points": 10
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Write a vague report that mentions the fatigue issue but heavily emphasizes how the client's operational environment contributed to the failure, splitting the blame equally.",
+        "evaluation": "Poor. You dilute the truth to shift blame, which is deceptive and fails to take full responsibility for a product failure.",
+        "points": -4
+      }
+    ]
+  },
+  {
+    "id": "scenario-7",
+    "title": "Exploiting Developing World Labor Laws",
+    "emoji": "🌍",
+    "description": "You are designing a high-tech electronic device. Your manufacturing partner suggests moving the assembly line to a country with significantly laxer labor laws and minimal environmental regulations, which would save your company 40% in production costs. This move would involve hiring employees at below-standard wages and generating much more local pollution than is legal in your home country.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Proceed with the move, arguing that your primary responsibility is to the company's shareholders (fiduciary duty) and that local labor laws are the responsibility of the host country's government, not yours.",
+        "evaluation": "Poor. While legally permissible in that country, it ignores the professional ethical duty to consider the societal and environmental impacts of engineering work globally.",
+        "points": -5
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Insist on a clause in the manufacturing contract that mandates the assembly plant adhere to your home country's labor and environmental standards (or equivalent high standards), even if it reduces the cost savings.",
+        "evaluation": "Excellent. Integrates global social responsibility and environmental stewardship into the engineering process.",
+        "points": 9
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Recommend a different country that offers cost savings but has moderately better (but still not great) labor and environmental standards than the proposed option.",
+        "evaluation": "Fair. It's a compromise that shows awareness but doesn't fully address the ethical concerns of seeking the lowest possible standard.",
+        "points": 3
+      }
+    ]
+  },
+  {
+    "id": "scenario-8",
+    "title": "Misleading Advertising and Product Capabilities",
+    "emoji": "📣",
+    "description": "You are a machine learning engineer. The marketing department is about to launch a major campaign for your new product, a 'smart home hub'. The advertising claims the hub can \"diagnose medical conditions with 95% accuracy\" using voice analysis. You know this capability is not true; the feature is only a basic mood-analysis tool and has never been tested in a medical context.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Contact the marketing department and your manager to demand the immediate retraction of the misleading claim, citing the potential for public harm and professional misconduct.",
+        "evaluation": "Excellent. Fulfills the duty to prevent misrepresentation and safeguard the public from potentially harmful medical misinformation.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Keep quiet, noting that it's the marketing department's responsibility, and your job is merely to write code, not vet ad copy.",
+        "evaluation": "Bad. You knowingly allow a harmful, misleading statement about your product to go public, violating the duty of truthfulness.",
+        "points": -10
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Draft a quick disclaimer to be included in the product manual, stating the feature is \"not a medical device,\" but allow the marketing copy to remain.",
+        "evaluation": "Poor. The disclaimer is inadequate to counter the high-impact, misleading advertising claim.",
+        "points": -3
+      }
+    ]
+  },
+  {
+    "id": "scenario-9",
+    "title": "Handling a Subordinate's Error",
+    "emoji": "🧑‍🔬",
+    "description": "A junior engineer on your team makes a significant calculation error that, if undetected, would have resulted in an expensive but non-life-threatening failure in a newly manufactured product. You catch the error during your final review, fix it easily, and the product is shipped successfully. The junior engineer is unaware of the mistake, and you feel they should be held accountable but don't want to ruin their career.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Fix the error silently, then write up the engineer for a formal performance review, documenting the error but not explaining to them what they did wrong.",
+        "evaluation": "Poor. You fulfill the immediate technical duty but fail in your ethical duty to mentor and educate your subordinate, preventing them from learning a critical lesson.",
+        "points": -2
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Sit down privately with the junior engineer, show them the error, explain the gravity of the potential failure, and use it as a teaching opportunity to reinforce proper checking procedures.",
+        "evaluation": "Excellent. Upholds the duty to maintain technical competence in your team and to mentor junior colleagues professionally and ethically.",
+        "points": 8
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Fix the error, then make a general announcement to the whole team about the importance of double-checking work, hoping the junior engineer gets the hint.",
+        "evaluation": "Fair. You address the issue (checking) but fail to provide the specific, private, and actionable feedback the junior engineer needs to improve.",
+        "points": 3
+      }
+    ]
+  },
+  {
+    "id": "scenario-10",
+    "title": "Prioritizing Accessibility",
+    "emoji": "♿",
+    "description": "You are designing a public-facing web application for a government service. The client has explicitly requested that you skip implementing accessibility features (like screen reader compatibility, keyboard navigation, and high contrast modes) because they consider it a non-essential feature and want to launch two months sooner, saving the project $50,000. Implementing these features is a standard best practice but not strictly required by the contract.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Skip the features, noting that you are only obligated to fulfill the contract terms as written and the client made the final decision.",
+        "evaluation": "Bad. You fail in the duty to ensure that your work benefits and is accessible to all segments of the population, especially those with disabilities.",
+        "points": -10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Strongly advise the client in writing that skipping accessibility features creates a significant barrier for users with disabilities and recommend delaying the launch to include them, offering a cost-saving solution for implementation.",
+        "evaluation": "Excellent. Upholds the ethical duty to consider the broader societal impact and advocate for universal access and inclusion in engineering design.",
+        "points": 10
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Implement a few basic, low-cost accessibility features without telling the client, leaving out the more time-consuming or expensive ones.",
+        "evaluation": "Fair. Better than nothing, but it's a deceptive partial fix that doesn't fully solve the issue of broad accessibility for all users.",
+        "points": 4
+      }
+    ]
+  }
+]
+
