@@ -42,11 +42,11 @@ export default function LeaderboardPage() {
           <h1 className="text-3xl font-semibold">Leaderboard</h1>
           {champion ? (
             <p className="text-base text-gray-600">
-              {champion.name} reached the Finale!
+              {champion.name} reached 100 points!
             </p>
           ) : (
             <p className="text-base text-gray-600">
-              No one reached the Finale this round.
+              No one reached 100 points this round.
             </p>
           )}
         </header>

@@ -29,7 +29,7 @@ export type BoardGraph = {
   cellsByKey: Map<string, BoardNode>;
   adjacencyById: Record<string, string[]>;
   startId: string;
-  finaleId: string;
+  finaleId: string | undefined;
 };
 
 export const BOARD_ROWS = 13;
@@ -68,7 +68,7 @@ const nodeDefinitions: Array<{
   { id: 'node-shipyard', label: 'Shipyard', row: 8, col: 11 },
   { id: 'node-beacon', label: 'Beacon', row: 8, col: 12 },
   { id: 'node-sky-gate', label: 'Sky Gate', row: 10, col: 12 },
-  { id: 'node-temple', label: '+1', row: 10, col: 10, variant: 'point' },
+  { id: 'node-temple', label: '+1 coin', row: 10, col: 10, variant: 'point' },
   { id: 'node-lagoon', label: 'Lagoon', row: 10, col: 9 },
   { id: 'node-wilds', label: 'Wilds', row: 10, col: 7 },
   { id: 'node-bazaar', label: 'Bazaar', row: 8, col: 7 },
@@ -79,7 +79,6 @@ const nodeDefinitions: Array<{
   { id: 'node-causeway', label: 'Causeway', row: 12, col: 8 },
   { id: 'node-delta', label: 'Delta', row: 12, col: 9 },
   { id: 'node-coast', label: 'Coastline', row: 12, col: 11 },
-  { id: 'node-finale', label: 'Finale', row: 12, col: 7, variant: 'goal' },
 ];
 
 const pathSegments: Array<Array<[number, number]>> = [
@@ -171,11 +170,6 @@ const pathSegments: Array<Array<[number, number]>> = [
     [10, 9],
     [10, 10],
   ],
-  [
-    [12, 9],
-    [12, 8],
-    [12, 7],
-  ],
 ];
 
 const QUESTION_COORDINATES = new Set(
@@ -223,7 +217,7 @@ function buildBoardCells(): Map<string, InternalCell> {
     if (node.variant === 'start' || node.id === 'node-start') {
       variant = 'start';
       label = 'Start';
-    } else if (node.variant === 'goal' || node.id === 'node-finale') {
+    } else if (node.variant === 'goal') {
       variant = 'goal';
       label = node.label;
     } else if (node.variant === 'question' || node.label === '?') {
@@ -234,7 +228,7 @@ function buildBoardCells(): Map<string, InternalCell> {
       label = 'Shop';
     } else {
       variant = 'point';
-      label = '+1';
+      label = '+1 coin';
     }
 
     map.set(key, {
@@ -270,7 +264,7 @@ function buildBoardCells(): Map<string, InternalCell> {
         id: `basic-${row}-${col}`,
         row,
         col,
-        label: isQuestion ? '?' : isShop ? 'Shop' : isPoint ? '+1' : '',
+        label: isQuestion ? '?' : isShop ? 'Shop' : isPoint ? '+1 coin' : '',
         variant: isQuestion
           ? 'question'
           : isShop
@@ -418,8 +412,7 @@ function toBoardGraph(cells: Map<string, InternalCell>, connections: Map<string,
   }
 
   const startId = nodes.find((node) => node.variant === 'start')?.id ?? '';
-  const finaleId =
-    nodes.find((node) => node.id === 'node-finale' || node.variant === 'goal')?.id ?? '';
+  const finaleId = undefined;
 
   return {
     nodes,

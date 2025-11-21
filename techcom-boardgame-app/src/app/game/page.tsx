@@ -102,7 +102,7 @@ export default function GamePage() {
           <header className="space-y-2 text-center">
             <h1 className="text-2xl font-semibold">Turn Control</h1>
             <p className="text-sm text-gray-600">
-              Roll the die and move to a connected square. Reach the Finale to win.
+              Roll the die and move to a connected square. Reach 100 points to win.
             </p>
           </header>
 

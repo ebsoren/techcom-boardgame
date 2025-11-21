@@ -19,6 +19,8 @@ type Team = {
   name: string;
   positionId: string;
   path: string[];
+  coins: number;
+  points: number;
 };
 
 type LastRoll = {
@@ -60,6 +62,7 @@ const createTeamId = () => {
 
   return `team-${Math.random().toString(36).slice(2, 10)}`;
 };
+
 
 const computeMoveOptions = (startId: string, maxDistance: number): MoveOption[] => {
   if (!startId || maxDistance <= 0) {
@@ -145,6 +148,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         name: trimmedName,
         positionId: BOARD_GRAPH.startId,
         path: BOARD_GRAPH.startId ? [BOARD_GRAPH.startId] : [],
+        coins: 0,
+        points: 0,
       };
 
       setTeams((prev) => [...prev, newTeam]);
@@ -200,6 +205,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         ...team,
         positionId: BOARD_GRAPH.startId,
         path: BOARD_GRAPH.startId ? [BOARD_GRAPH.startId] : [],
+        coins: 0,
+        points: 0,
       })),
     );
     setGameStarted(true);
@@ -271,21 +278,28 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      const updatedTeams = teams.map((team, index) =>
-        index === currentTeamIndex
-          ? {
-              ...team,
-              positionId: targetNodeId,
-              path: [...team.path, targetNodeId],
-            }
-          : team,
-      );
+      // Check if the target node is a +1 coin node
+      const targetNode = BOARD_GRAPH.nodesById[targetNodeId];
+      const isCoinNode = targetNode?.variant === 'point';
 
-      const isFinale = targetNodeId === BOARD_GRAPH.finaleId;
+      const updatedTeams = teams.map((team, index) => {
+        if (index === currentTeamIndex) {
+          const newCoins = isCoinNode ? team.coins + 1 : team.coins;
+          return {
+            ...team,
+            positionId: targetNodeId,
+            path: [...team.path, targetNodeId],
+            coins: newCoins,
+          };
+        }
+        return team;
+      });
 
       setTeams(updatedTeams);
 
-      if (isFinale) {
+      // Check if team has reached 100 points
+      const updatedActiveTeam = updatedTeams[currentTeamIndex];
+      if (updatedActiveTeam.points >= 100) {
         setGameOver(true);
         setWinnerIds([activeTeam.id]);
       } else {
@@ -304,6 +318,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         ...team,
         positionId: BOARD_GRAPH.startId,
         path: BOARD_GRAPH.startId ? [BOARD_GRAPH.startId] : [],
+        coins: 0,
+        points: 0,
       })),
     );
     setGameStarted(false);
