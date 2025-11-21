@@ -288,6 +288,586 @@
         "points": 4
       }
     ]
+  },
+  {
+    "id": "scenario-11",
+    "title": "Intellectual Property Leak by Accident",
+    "emoji": "🔐",
+    "description": "You are a hardware engineer presenting at an international conference. During your talk, you accidentally reveal a slide containing proprietary chip design details that have not been patented yet. After the presentation, your colleague tells you that if competitors act quickly, they could legally use aspects of your design. Your company hasn't noticed the mistake—yet.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Immediately notify your company's legal and engineering leadership, provide the slide deck, and document the disclosure so appropriate IP protection steps can be taken.",
+        "evaluation": "Excellent. You take responsibility, allow the company to manage risk, and maintain professional honesty.",
+        "points": 9
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Quietly remove the slide from future decks and hope no one else noticed, avoiding any mention to management.",
+        "evaluation": "Poor. You conceal a significant IP risk and deprive your employer of informed decision-making.",
+        "points": -5
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Suggest to management that they rush a patent filing but downplay your role in the leak.",
+        "evaluation": "Fair. You act to mitigate harm but fail to accept accountability.",
+        "points": 3
+      }
+    ]
+  },
+  {
+    "id": "scenario-12",
+    "title": "Bribery Attempt During Safety Inspection",
+    "emoji": "💼",
+    "description": "As a structural inspector, you evaluate a new high-rise. The contractor privately offers you a $20,000 \"bonus\" to overlook several minor code violations that won't immediately affect safety but may reduce long-term resilience. You know refusing may strain the business relationship.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Reject the bribe, document the attempt, and report both the violations and the bribery to the regulatory authority.",
+        "evaluation": "Excellent. Preserves professional integrity and protects public safety.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Reject the bribe and document violations but choose not to report the bribery to avoid legal complications.",
+        "evaluation": "Fair. Proper inspection conduct, but failure to report bribery encourages future misconduct.",
+        "points": 4
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Accept the bribe on the condition that the contractor corrects at least some of the violations.",
+        "evaluation": "Bad. Engaging in bribery is a serious ethical breach.",
+        "points": -15
+      }
+    ]
+  },
+  {
+    "id": "scenario-13",
+    "title": "AI Model Bias Discovery",
+    "emoji": "🤖",
+    "description": "You find that your company's facial recognition system misidentifies certain demographic groups at a significantly higher rate. Re-training will delay deployment by six months and cost substantial resources. Management wants to ship now and \"improve it later.\"",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Demand the system be withheld from deployment until the bias is addressed; provide data and formal recommendations.",
+        "evaluation": "Excellent. Prioritizes fairness, safety, and non-discrimination.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Recommend a future patch but allow deployment now, since the product still performs \"well enough\" overall.",
+        "evaluation": "Poor. Accepting discriminatory outcomes violates ethical duties.",
+        "points": -6
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Informally consult diverse experts to propose partial mitigation strategies while continuing development.",
+        "evaluation": "Fair. Shows initiative but doesn't prevent harmful deployment.",
+        "points": 3
+      }
+    ]
+  },
+  {
+    "id": "scenario-14",
+    "title": "Dangerous Shortcut in QA Testing",
+    "emoji": "🧪",
+    "description": "Your QA team is behind schedule, and your manager recommends skipping vibration testing for a drone battery module, calling it \"low risk.\" But vibration failure modes are known to cause fires in similar products.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Refuse to skip the test and escalate the issue to engineering leadership, providing risk assessments.",
+        "evaluation": "Excellent. Prevents potentially catastrophic harm.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Perform abbreviated testing that isn't fully compliant but at least covers the basics.",
+        "evaluation": "Fair. Better than skipping entirely but still not adequate.",
+        "points": 2
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Follow the manager's directive without objection.",
+        "evaluation": "Bad. Neglects critical safety responsibilities.",
+        "points": -8
+      }
+    ]
+  },
+  {
+    "id": "scenario-15",
+    "title": "Conflicting Interests in Peer Review",
+    "emoji": "📄",
+    "description": "You are peer-reviewing a journal submission by a competing research lab. Their work is impressive and could overshadow yours. Your collaborator suggests slowing the review or adding nitpicky criticisms to delay publication.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Conduct a timely, fair, and unbiased review, recommending publication if warranted.",
+        "evaluation": "Excellent. Maintains academic integrity.",
+        "points": 9
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Delay the review by a few weeks \"due to workload,\" subtly giving your lab more time to publish.",
+        "evaluation": "Poor. Manipulative and harms scientific progress.",
+        "points": -4
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Offer generally constructive comments but exaggerate minor issues to lengthen revision cycles.",
+        "evaluation": "Bad. Intentionally obstructs competitors.",
+        "points": -7
+      }
+    ]
+  },
+  {
+    "id": "scenario-16",
+    "title": "Safety Issue in Autonomous Vehicle Code",
+    "emoji": "🚗",
+    "description": "While reviewing logs, you discover a rare but reproducible software bug that causes an autonomous car to misinterpret a traffic light during certain lighting conditions. Fixing it will delay launch by three months.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Halt release, document the bug, and require correction before public deployment.",
+        "evaluation": "Excellent. Prevents potentially life-threatening risks.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Publish the model but advise users in documentation that \"rare false signals may occur.\"",
+        "evaluation": "Bad. Critical safety information must not be buried in fine print.",
+        "points": -10
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Implement a temporary software patch that reduces (but does not eliminate) the error rate.",
+        "evaluation": "Fair. Attempts mitigation but doesn't fully address a known safety hazard.",
+        "points": 2
+      }
+    ]
+  },
+  {
+    "id": "scenario-17",
+    "title": "Misuse of Company Resources for Personal Project",
+    "emoji": "🛠️",
+    "description": "You want to prototype a personal invention using your company's advanced lab equipment. It won't interfere with work hours, but company policy forbids personal use without explicit approval. You worry leadership will deny the request.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Ask management formally for permission and present a clear plan; accept the decision.",
+        "evaluation": "Excellent. Transparent and respectful of company property.",
+        "points": 7
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Use the equipment after hours, rationalizing that no one will notice and there's no harm.",
+        "evaluation": "Poor. Violates trust and misuses company assets.",
+        "points": -5
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Ask a sympathetic lab technician to quietly allow access without notifying leadership.",
+        "evaluation": "Bad. Involves others in policy violations.",
+        "points": -6
+      }
+    ]
+  },
+  {
+    "id": "scenario-18",
+    "title": "Redacting Sensitive Customer Data",
+    "emoji": "🗄️",
+    "description": "During a system migration, you find thousands of customer support logs containing unredacted personal information—addresses, SSNs, medical conditions. Cleaning the data properly will require delaying the migration by several weeks.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Halt migration until the data is properly anonymized and compliance teams are notified.",
+        "evaluation": "Excellent. Protects users' privacy and meets legal responsibility.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Perform minimal masking on the riskiest fields and proceed with the migration.",
+        "evaluation": "Fair. Reduces harm somewhat, but incomplete and risky.",
+        "points": 3
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Ignore the issue since the logs were already stored insecurely to begin with.",
+        "evaluation": "Bad. Continues privacy violations.",
+        "points": -9
+      }
+    ]
+  },
+  {
+    "id": "scenario-19",
+    "title": "Misallocation of Research Grant Funds",
+    "emoji": "💰",
+    "description": "Your lab won a grant to develop medical imaging software. Your PI suggests allocating part of the grant to upgrade lab furniture and \"miscellaneous comfort items\" unrelated to the proposal.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Inform the PI that grant funds must be used as promised and report the misuse risk to the university's research compliance office if necessary.",
+        "evaluation": "Excellent. Protects scientific integrity and legal compliance.",
+        "points": 9
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Allow some minor deviations since the improvements indirectly benefit research productivity.",
+        "evaluation": "Fair. Pragmatic but still ethically questionable.",
+        "points": 1
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Fully support the PI's plan because \"everyone misallocates funds a little.\"",
+        "evaluation": "Bad. Encourages financial misconduct.",
+        "points": -8
+      }
+    ]
+  },
+  {
+    "id": "scenario-20",
+    "title": "Hazardous Building Material Discovery",
+    "emoji": "🧱",
+    "description": "You're inspecting an older building and find asbestos in a mechanical room. The client wants to proceed with renovations immediately and asks you to \"look the other way\" while construction begins, claiming removal costs are too high.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Stop the renovation and formally report the hazardous material, requiring proper abatement before any work proceeds.",
+        "evaluation": "Excellent. Protects workers' health and legal compliance.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Allow work to proceed but request workers be given masks and told to avoid disturbing the insulation.",
+        "evaluation": "Poor. Grossly insufficient protection.",
+        "points": -7
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Suggest delaying only the areas near the asbestos while allowing other renovations to start.",
+        "evaluation": "Fair. Limited mitigation but still risky.",
+        "points": 2
+      }
+    ]
+  },
+  {
+    "id": "scenario-21",
+    "title": "Unequal Salary Discovery as a Manager",
+    "emoji": "💼",
+    "description": "You discover that two engineers with similar roles and performance have vastly different salaries due to inherited pay structures. HR hasn't addressed the disparity, and the higher-paid engineer is your long-time colleague.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Advocate to HR for correcting the disparity, provide documentation, and refuse to approve future evaluations until the inequity is addressed.",
+        "evaluation": "Excellent. Promotes fairness, transparency, and justice.",
+        "points": 8
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Do nothing, rationalizing that pay decisions are HR's responsibility.",
+        "evaluation": "Poor. Avoids your duty to advocate for fair treatment.",
+        "points": -4
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Tell the underpaid engineer to negotiate harder next cycle, without involving HR.",
+        "evaluation": "Fair. Attempts support but doesn't solve systemic inequity.",
+        "points": 2
+      }
+    ]
+  },
+  {
+    "id": "scenario-22",
+    "title": "Misrepresentation of Test Coverage",
+    "emoji": "✔️",
+    "description": "You lead software testing. Your manager asks you to report full coverage even though only 70% of critical functions were tested. \"Nobody ever checks,\" he says.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Report accurate coverage figures and insist on more testing.",
+        "evaluation": "Excellent. Truthful and protects product safety.",
+        "points": 9
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Report 70% but add vague language implying broader coverage.",
+        "evaluation": "Poor. Still misleading.",
+        "points": -4
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Report 100% as requested.",
+        "evaluation": "Bad. Falsifying data is serious misconduct.",
+        "points": -10
+      }
+    ]
+  },
+  {
+    "id": "scenario-23",
+    "title": "Overworked Team and Excessive Hours",
+    "emoji": "⏱️",
+    "description": "Your engineering team has been working 70-hour weeks for months. Management wants you to impose mandatory weekend work until the next milestone.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Push back and provide data on burnout, turnover, and quality decline; propose alternate scheduling or scope cuts.",
+        "evaluation": "Excellent. Protects team welfare.",
+        "points": 8
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Communicate the mandate but allow informal flex time later.",
+        "evaluation": "Fair. Helps the team but doesn't challenge the root problem.",
+        "points": 2
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Fully enforce the mandate and pressure dissenters.",
+        "evaluation": "Bad. Harms worker wellbeing and reduces long-term project quality.",
+        "points": -6
+      }
+    ]
+  },
+  {
+    "id": "scenario-24",
+    "title": "Unsafe Temporary Fix in Manufacturing",
+    "emoji": "⚙️",
+    "description": "A machine in your factory is failing intermittently. A colleague suggests bypassing a safety interlock so the line can keep running at full speed.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Refuse the workaround and shut down the line until the issue is resolved safely.",
+        "evaluation": "Excellent. Prevents harm and respects safety standards.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Bypass the interlock but add a warning sign near the machine.",
+        "evaluation": "Bad. Warning signs cannot replace safety systems.",
+        "points": -8
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Run the line at half speed while investigating the issue, avoiding the interlock bypass.",
+        "evaluation": "Fair. Reduces risk somewhat but still delays necessary repairs.",
+        "points": 3
+      }
+    ]
+  },
+  {
+    "id": "scenario-25",
+    "title": "Favoritism in Promotion Decisions",
+    "emoji": "🏅",
+    "description": "You're evaluating candidates for a promotion. One candidate is objectively stronger, but management pressures you to select another candidate who is personally close to them.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Recommend the stronger candidate and document your reasoning.",
+        "evaluation": "Excellent. Upholds fairness and meritocracy.",
+        "points": 8
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Select the weaker candidate to maintain your relationship with management.",
+        "evaluation": "Bad. Violates fairness.",
+        "points": -7
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Propose delaying the promotion and conducting more evaluations.",
+        "evaluation": "Fair. Avoids immediate unfairness but may delay deserved recognition.",
+        "points": 3
+      }
+    ]
+  },
+  {
+    "id": "scenario-26",
+    "title": "Using Student Interns as Cheap Labor",
+    "emoji": "🎓",
+    "description": "Your company hires engineering interns and asks you to assign them work equivalent to full-time engineers, without pay increases or proper supervision.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Push for proper role definitions, training, and fair compensation.",
+        "evaluation": "Excellent. Protects students from exploitation.",
+        "points": 9
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Give them full workloads but try to mentor them informally.",
+        "evaluation": "Fair. Helpful, but still allows exploitation.",
+        "points": 2
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Treat them as full-time staff because \"that's how the industry works.\"",
+        "evaluation": "Bad. Enables unethical labor practices.",
+        "points": -6
+      }
+    ]
+  },
+  {
+    "id": "scenario-27",
+    "title": "Manipulated Simulation Results",
+    "emoji": "📊",
+    "description": "Your CFD simulations show that your new ventilation design fails under extreme conditions. Management asks you to \"adjust the boundary conditions\" to produce a passing result.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Refuse to alter results and present the accurate findings.",
+        "evaluation": "Excellent. Upholds scientific integrity.",
+        "points": 10
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Adjust boundary conditions slightly to improve results but still note limitations in the appendix.",
+        "evaluation": "Poor. Still misleading.",
+        "points": -4
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Comply with management's request.",
+        "evaluation": "Bad. Produces fraudulent engineering results.",
+        "points": -12
+      }
+    ]
+  },
+  {
+    "id": "scenario-28",
+    "title": "Safety Training Budget Cut",
+    "emoji": "⚠️",
+    "description": "Your department wants to eliminate all annual safety refreshers to save time and money, even though your facility contains hazardous chemicals.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Advocate to maintain training and present data showing increased risks without it.",
+        "evaluation": "Excellent. Protects staff welfare.",
+        "points": 8
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Support a reduced training schedule rather than eliminating it entirely.",
+        "evaluation": "Fair. Better than nothing but still insufficient.",
+        "points": 2
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Agree to the cuts because you trust employees already know the basics.",
+        "evaluation": "Bad. Neglects vital safety obligations.",
+        "points": -6
+      }
+    ]
+  },
+  {
+    "id": "scenario-29",
+    "title": "Pressure to Approve an Incomplete Design",
+    "emoji": "📝",
+    "description": "A supplier is late delivering a critical component design, and your manager wants you to sign off on preliminary documents so manufacturing can begin.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Refuse to approve until full documentation and testing are complete.",
+        "evaluation": "Excellent. Prevents defective builds.",
+        "points": 9
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Approve with conditions, noting risks in your report.",
+        "evaluation": "Fair. Attempts mitigation but still premature.",
+        "points": 1
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Approve immediately to avoid delays.",
+        "evaluation": "Bad. Jeopardizes product reliability.",
+        "points": -7
+      }
+    ]
+  },
+  {
+    "id": "scenario-30",
+    "title": "Personal Relationship with a Supplier Representative",
+    "emoji": "❤️",
+    "description": "You begin dating a representative from a company that frequently bids on your projects. Nobody knows yet.",
+    "responses": [
+      {
+        "id": "response-a",
+        "label": "Response A",
+        "text": "Disclose the relationship and recuse yourself from all related procurement decisions.",
+        "evaluation": "Excellent. Avoids conflict of interest.",
+        "points": 8
+      },
+      {
+        "id": "response-b",
+        "label": "Response B",
+        "text": "Continue participating but promise yourself you'll \"stay objective.\"",
+        "evaluation": "Bad. Objectivity cannot be assumed; risk of bias is too high.",
+        "points": -6
+      },
+      {
+        "id": "response-c",
+        "label": "Response C",
+        "text": "Stop dating the representative but do not disclose the brief relationship.",
+        "evaluation": "Fair. Reduces conflict risk, but lack of disclosure may still be problematic.",
+        "points": 2
+      }
+    ]
   }
 ]
 
