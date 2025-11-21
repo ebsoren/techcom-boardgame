@@ -4,6 +4,7 @@ import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 
 import BoardView from '@/components/BoardView';
+import ScenarioModal from '@/components/ScenarioModal';
 
 import { useTeams } from '../teams-context';
 
@@ -18,6 +19,8 @@ export default function GamePage() {
     availableMoves,
     moveCurrentTeam,
     board,
+    currentScenario,
+    selectScenarioResponse,
   } = useTeams();
   const router = useRouter();
   const hasTeams = teams.length > 0;
@@ -149,6 +152,13 @@ export default function GamePage() {
           </div>
         </section>
       </div>
+
+      {currentScenario && (
+        <ScenarioModal
+          scenario={currentScenario}
+          onSelectResponse={selectScenarioResponse}
+        />
+      )}
     </main>
   );
 }

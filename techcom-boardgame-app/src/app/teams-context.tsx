@@ -13,6 +13,7 @@ import {
   BOARD_GRAPH,
   type BoardGraph,
 } from '@/lib/boardGraph';
+import scenariosData from '@/lib/scenarios.json';
 
 type Team = {
   id: string;
@@ -35,6 +36,22 @@ type MoveOption = {
   label: string;
 };
 
+type ScenarioResponse = {
+  id: string;
+  label: string;
+  text: string;
+  evaluation: string;
+  points: number;
+};
+
+type Scenario = {
+  id: string;
+  title: string;
+  emoji: string;
+  description: string;
+  responses: ScenarioResponse[];
+};
+
 type TeamsContextValue = {
   teams: Team[];
   addTeam: (name: string) => void;
@@ -51,6 +68,8 @@ type TeamsContextValue = {
   winnerIds: string[];
   availableMoves: MoveOption[];
   board: BoardGraph;
+  currentScenario: Scenario | null;
+  selectScenarioResponse: (responseId: string) => void;
 };
 
 const TeamsContext = createContext<TeamsContextValue | undefined>(undefined);
@@ -61,6 +80,23 @@ const createTeamId = () => {
   }
 
   return `team-${Math.random().toString(36).slice(2, 10)}`;
+};
+
+const scenarios = scenariosData as Scenario[];
+
+// Function to select a scenario, reducing duplication by tracking used scenarios
+const selectScenario = (usedScenarioIds: Set<string>): Scenario => {
+  const unusedScenarios = scenarios.filter((s) => !usedScenarioIds.has(s.id));
+  
+  // If all scenarios have been used, reset and start over
+  if (unusedScenarios.length === 0) {
+    const randomIndex = Math.floor(Math.random() * scenarios.length);
+    return scenarios[randomIndex];
+  }
+  
+  // Select randomly from unused scenarios
+  const randomIndex = Math.floor(Math.random() * unusedScenarios.length);
+  return unusedScenarios[randomIndex];
 };
 
 
@@ -131,6 +167,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
   const [lastRoll, setLastRoll] = useState<LastRoll | null>(null);
   const [winnerIds, setWinnerIds] = useState<string[]>([]);
   const [availableMoves, setAvailableMoves] = useState<MoveOption[]>([]);
+  const [currentScenario, setCurrentScenario] = useState<Scenario | null>(null);
+  const [usedScenarioIds, setUsedScenarioIds] = useState<Set<string>>(new Set());
 
   const addTeam = useCallback(
     (name: string) => {
@@ -193,6 +231,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
     setLastRoll(null);
     setWinnerIds([]);
     setAvailableMoves([]);
+    setCurrentScenario(null);
+    setUsedScenarioIds(new Set());
   }, []);
 
   const startGame = useCallback(() => {
@@ -215,6 +255,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
     setCurrentTeamIndex(0);
     setLastRoll(null);
     setAvailableMoves([]);
+    setCurrentScenario(null);
+    setUsedScenarioIds(new Set());
   }, [teams.length]);
 
   const recordRoll = useCallback(() => {
@@ -278,9 +320,10 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      // Check if the target node is a +1 coin node
+      // Check if the target node is a +1 coin node or question node
       const targetNode = BOARD_GRAPH.nodesById[targetNodeId];
       const isCoinNode = targetNode?.variant === 'point';
+      const isQuestionNode = targetNode?.variant === 'question';
 
       const updatedTeams = teams.map((team, index) => {
         if (index === currentTeamIndex) {
@@ -297,19 +340,72 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
 
       setTeams(updatedTeams);
 
-      // Check if team has reached 100 points
-      const updatedActiveTeam = updatedTeams[currentTeamIndex];
-      if (updatedActiveTeam.points >= 100) {
-        setGameOver(true);
-        setWinnerIds([activeTeam.id]);
+      // If landing on a question node, trigger a scenario
+      if (isQuestionNode) {
+        setUsedScenarioIds((prev) => {
+          const selectedScenario = selectScenario(prev);
+          setCurrentScenario(selectedScenario);
+          return new Set(prev).add(selectedScenario.id);
+        });
+        // Don't advance turn yet - wait for scenario response
       } else {
-        setCurrentTeamIndex((prevIndex) => (prevIndex + 1) % teamCount);
+        // Check if team has reached 100 points
+        const updatedActiveTeam = updatedTeams[currentTeamIndex];
+        if (updatedActiveTeam.points >= 100) {
+          setGameOver(true);
+          setWinnerIds([activeTeam.id]);
+        } else {
+          setCurrentTeamIndex((prevIndex) => (prevIndex + 1) % teamCount);
+        }
       }
 
       setLastRoll(null);
       setAvailableMoves([]);
     },
     [availableMoves, currentTeamIndex, teams],
+  );
+
+  const selectScenarioResponse = useCallback(
+    (responseId: string) => {
+      if (!currentScenario) {
+        return;
+      }
+
+      const response = currentScenario.responses.find((r) => r.id === responseId);
+      if (!response) {
+        return;
+      }
+
+      // Update team points and check win condition
+      setTeams((prev) => {
+        const updatedTeams = prev.map((team, index) => {
+          if (index === currentTeamIndex) {
+            const newPoints = team.points + response.points;
+            return {
+              ...team,
+              points: newPoints,
+            };
+          }
+          return team;
+        });
+
+        const updatedActiveTeam = updatedTeams[currentTeamIndex];
+        if (updatedActiveTeam && updatedActiveTeam.points >= 100) {
+          setGameOver(true);
+          setWinnerIds([updatedActiveTeam.id]);
+        } else {
+          // Advance to next team
+          const teamCount = prev.length;
+          setCurrentTeamIndex((prevIndex) => (prevIndex + 1) % teamCount);
+        }
+
+        return updatedTeams;
+      });
+
+      // Clear the scenario
+      setCurrentScenario(null);
+    },
+    [currentScenario, currentTeamIndex],
   );
 
   const resetGame = useCallback(() => {
@@ -328,6 +424,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
     setLastRoll(null);
     setWinnerIds([]);
     setAvailableMoves([]);
+    setCurrentScenario(null);
+    setUsedScenarioIds(new Set());
   }, []);
 
   const value = useMemo(
@@ -347,6 +445,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
       winnerIds,
       availableMoves,
       board: BOARD_GRAPH,
+      currentScenario,
+      selectScenarioResponse,
     }),
     [
       teams,
@@ -363,6 +463,8 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
       lastRoll,
       winnerIds,
       availableMoves,
+      currentScenario,
+      selectScenarioResponse,
     ],
   );
 
