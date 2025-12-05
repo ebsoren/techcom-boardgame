@@ -36,7 +36,6 @@ export const BOARD_ROWS = 13;
 export const BOARD_COLS = 13;
 export const ROW_OFFSET = 2;
 export const COL_OFFSET = 1;
-const EXTRA_POINT_COUNT = 9;
 
 export const BOARD_ROW_INDICES = Object.freeze(
   Array.from({ length: BOARD_ROWS - ROW_OFFSET }, (_, index) => index + ROW_OFFSET),
@@ -172,25 +171,6 @@ const pathSegments: Array<Array<[number, number]>> = [
   ],
 ];
 
-const QUESTION_COORDINATES = new Set(
-  [
-    [6, 4],
-    [6, 6],
-    [7, 7],
-    [8, 8],
-    [9, 7],
-    [10, 8],
-  ].map(([row, col]) => cellKey(row, col)),
-);
-
-const SHOP_COORDINATES = new Set(
-  [
-    [7, 8],
-    [9, 10],
-    [11, 9],
-  ].map(([row, col]) => cellKey(row, col)),
-);
-
 type InternalCell = {
   id: string;
   row: number;
@@ -201,87 +181,110 @@ type InternalCell = {
   links: BoardLink[];
 };
 
+// Fisher-Yates shuffle for random selection
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 function buildBoardCells(): Map<string, InternalCell> {
   const map = new Map<string, InternalCell>();
-
-  let sequenceCounter = 1;
+  
+  // First, collect all cells from pathSegments
+  const allCellKeys = new Set<string>();
+  for (const segment of pathSegments) {
+    for (const [row, col] of segment) {
+      if (row < ROW_OFFSET || col < COL_OFFSET) {
+        continue;
+      }
+      const key = cellKey(row, col);
+      allCellKeys.add(key);
+    }
+  }
+  
+  // Also include nodes from nodeDefinitions
   for (const node of nodeDefinitions) {
     if (node.row < ROW_OFFSET || node.col < COL_OFFSET) {
       continue;
     }
-
     const key = cellKey(node.row, node.col);
+    allCellKeys.add(key);
+  }
+  
+  // Identify question nodes from nodeDefinitions and preserve them
+  const questionKeys = new Set<string>();
+  const coordinateToNodeId = new Map<string, string>();
+  const coordinateToVariant = new Map<string, NodeVariant>();
+  
+  for (const node of nodeDefinitions) {
+    if (node.row < ROW_OFFSET || node.col < COL_OFFSET) {
+      continue;
+    }
+    const key = cellKey(node.row, node.col);
+    coordinateToNodeId.set(key, node.id);
+    
+    // Preserve question nodes
+    if (node.variant === 'question' || node.label === '?') {
+      questionKeys.add(key);
+      coordinateToVariant.set(key, 'question');
+    }
+  }
+  
+  // Get keys available for random assignment (excluding preserved question nodes)
+  const availableForRandom = Array.from(allCellKeys).filter(key => !questionKeys.has(key));
+  const shuffledKeys = shuffleArray(availableForRandom);
+  
+  // Randomly select 5 additional spaces to be question nodes (to reach 8 total)
+  const additionalQuestionKeys = new Set(shuffledKeys.slice(0, 5));
+  questionKeys.forEach(key => additionalQuestionKeys.add(key)); // Add the preserved ones
+  
+  // Get remaining keys for other assignments (excluding all question nodes)
+  const remainingKeys = shuffledKeys.slice(5);
+  
+  // Randomly select: 1 start, 1 shop, 20 point
+  const startKey = remainingKeys[0];
+  const shopKeys = new Set([remainingKeys[1]]); // 1 shop space
+  const pointKeys = new Set(remainingKeys.slice(2, 22)); // 20 coin spaces
+
+  let sequenceCounter = 1;
+  for (const key of Array.from(allCellKeys).sort()) {
+    const [row, col] = key.split('-').map(Number);
     let variant: NodeVariant;
     let label: string;
+    const nodeId = coordinateToNodeId.get(key) || `basic-${row}-${col}`;
 
-    if (node.variant === 'start' || node.id === 'node-start') {
-      variant = 'start';
-      label = 'Start';
-    } else if (node.variant === 'goal') {
-      variant = 'goal';
-      label = node.label;
-    } else if (node.variant === 'question' || node.label === '?') {
+    // Check if it's a question node (preserved or randomly selected) first
+    if (additionalQuestionKeys.has(key)) {
       variant = 'question';
       label = '?';
-    } else if (node.label === 'Shop' || SHOP_COORDINATES.has(key)) {
+    } else if (key === startKey) {
+      variant = 'start';
+      label = 'Start';
+    } else if (shopKeys.has(key)) {
       variant = 'shop';
       label = 'Shop';
-    } else {
+    } else if (pointKeys.has(key)) {
       variant = 'point';
       label = '+1 coin';
+    } else {
+      variant = 'basic';
+      label = '';
     }
 
     map.set(key, {
-      id: node.id,
-      row: node.row,
-      col: node.col,
+      id: nodeId,
+      row,
+      col,
       label,
       variant,
       sequence: sequenceCounter,
       links: [],
     });
     sequenceCounter++;
-  }
-
-  let extraPointsAssigned = 0;
-  for (const segment of pathSegments) {
-    for (const [row, col] of segment) {
-      if (row < ROW_OFFSET || col < COL_OFFSET) {
-        continue;
-      }
-
-      const key = cellKey(row, col);
-      if (map.has(key)) {
-        continue;
-      }
-
-      const isQuestion = QUESTION_COORDINATES.has(key);
-      const isShop = !isQuestion && SHOP_COORDINATES.has(key);
-      const isPoint =
-        !isQuestion && !isShop && extraPointsAssigned < EXTRA_POINT_COUNT;
-
-      map.set(key, {
-        id: `basic-${row}-${col}`,
-        row,
-        col,
-        label: isQuestion ? '?' : isShop ? 'Shop' : isPoint ? '+1 coin' : '',
-        variant: isQuestion
-          ? 'question'
-          : isShop
-            ? 'shop'
-            : isPoint
-              ? 'point'
-              : 'basic',
-        sequence: sequenceCounter,
-        links: [],
-      });
-
-      if (isPoint && extraPointsAssigned < EXTRA_POINT_COUNT) {
-        extraPointsAssigned++;
-      }
-
-      sequenceCounter++;
-    }
   }
 
   return map;

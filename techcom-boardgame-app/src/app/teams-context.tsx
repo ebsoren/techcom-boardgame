@@ -391,9 +391,9 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         // Show shop modal - don't advance turn yet
         setShowShop(true);
       } else {
-        // Check if team has reached 100 points
+        // Check if team has reached 60 points
         const updatedActiveTeam = updatedTeams[currentTeamIndex];
-        if (updatedActiveTeam.points >= 100) {
+        if (updatedActiveTeam.points >= 60) {
           setGameOver(true);
           setWinnerIds([activeTeam.id]);
         } else {
@@ -451,7 +451,7 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
 
       // Check if game is over and advance turn (like moveCurrentTeam does)
       const updatedActiveTeam = updatedTeams[teamIndex];
-      if (updatedActiveTeam.points >= 100) {
+      if (updatedActiveTeam.points >= 60) {
         setGameOver(true);
         setWinnerIds([activeTeam.id]);
       } else {
@@ -481,7 +481,7 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
             return {
               ...team,
               coins: team.coins - 2,
-              points: team.points + 1,
+              points: team.points + 15,
             };
           }
           return team;
@@ -490,7 +490,7 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
       });
 
       const updatedActiveTeam = updatedTeams[teamIndex];
-      if (updatedActiveTeam && updatedActiveTeam.points >= 100) {
+      if (updatedActiveTeam && updatedActiveTeam.points >= 60) {
         setGameOver(true);
         setWinnerIds([updatedActiveTeam.id]);
       } else {

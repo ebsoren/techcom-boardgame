@@ -33,7 +33,7 @@ export default function ShopModal({
           </p>
           <p className="text-base text-gray-800">
             Trade <span className="font-bold">2 coins</span> for{' '}
-            <span className="font-bold">1 point</span>
+            <span className="font-bold">15 points</span>
           </p>
           <p className="mt-2 text-sm text-gray-600">
             Your current coins: <span className="font-semibold">{currentCoins}</span>
@@ -47,7 +47,7 @@ export default function ShopModal({
             disabled={!canTrade}
             className="flex-1 rounded-lg bg-rose-600 px-6 py-3 font-semibold text-white transition hover:bg-rose-500 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
           >
-            {canTrade ? 'Trade (2 coins → 1 point)' : 'Not enough coins'}
+            {canTrade ? 'Trade (2 coins → 15 points)' : 'Not enough coins'}
           </button>
           <button
             type="button"
