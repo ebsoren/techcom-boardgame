@@ -70,6 +70,9 @@ type TeamsContextValue = {
   board: BoardGraph;
   currentScenario: Scenario | null;
   selectScenarioResponse: (responseId: string) => void;
+  showShop: boolean;
+  handleShopTrade: () => void;
+  handleShopSkip: () => void;
 };
 
 const TeamsContext = createContext<TeamsContextValue | undefined>(undefined);
@@ -169,6 +172,7 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
   const [availableMoves, setAvailableMoves] = useState<MoveOption[]>([]);
   const [currentScenario, setCurrentScenario] = useState<Scenario | null>(null);
   const [usedScenarioIds, setUsedScenarioIds] = useState<Set<string>>(new Set());
+  const [showShop, setShowShop] = useState(false);
 
   const addTeam = useCallback(
     (name: string) => {
@@ -233,6 +237,7 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
     setAvailableMoves([]);
     setCurrentScenario(null);
     setUsedScenarioIds(new Set());
+    setShowShop(false);
   }, []);
 
   const startGame = useCallback(() => {
@@ -257,6 +262,7 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
     setAvailableMoves([]);
     setCurrentScenario(null);
     setUsedScenarioIds(new Set());
+    setShowShop(false);
   }, [teams.length]);
 
   const recordRoll = useCallback(() => {
@@ -320,10 +326,11 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      // Check if the target node is a +1 coin node or question node
+      // Check if the target node is a +1 coin node, question node, or shop node
       const targetNode = BOARD_GRAPH.nodesById[targetNodeId];
       const isCoinNode = targetNode?.variant === 'point';
       const isQuestionNode = targetNode?.variant === 'question';
+      const isShopNode = targetNode?.variant === 'shop';
 
       const updatedTeams = teams.map((team, index) => {
         if (index === currentTeamIndex) {
@@ -348,6 +355,9 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
           return new Set(prev).add(selectedScenario.id);
         });
         // Don't advance turn yet - wait for scenario response
+      } else if (isShopNode) {
+        // Show shop modal - don't advance turn yet
+        setShowShop(true);
       } else {
         // Check if team has reached 100 points
         const updatedActiveTeam = updatedTeams[currentTeamIndex];
@@ -408,6 +418,44 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
     [currentScenario, currentTeamIndex],
   );
 
+  const handleShopTrade = useCallback(() => {
+    setTeams((prev) => {
+      const updatedTeams = prev.map((team, index) => {
+        if (index === currentTeamIndex) {
+          if (team.coins >= 2) {
+            return {
+              ...team,
+              coins: team.coins - 2,
+              points: team.points + 1,
+            };
+          }
+          return team;
+        }
+        return team;
+      });
+
+      const updatedActiveTeam = updatedTeams[currentTeamIndex];
+      if (updatedActiveTeam && updatedActiveTeam.points >= 100) {
+        setGameOver(true);
+        setWinnerIds([updatedActiveTeam.id]);
+      } else {
+        // Advance to next team
+        const teamCount = prev.length;
+        setCurrentTeamIndex((prevIndex) => (prevIndex + 1) % teamCount);
+      }
+
+      return updatedTeams;
+    });
+
+    setShowShop(false);
+  }, [currentTeamIndex]);
+
+  const handleShopSkip = useCallback(() => {
+    setShowShop(false);
+    const teamCount = teams.length;
+    setCurrentTeamIndex((prevIndex) => (prevIndex + 1) % teamCount);
+  }, [teams.length]);
+
   const resetGame = useCallback(() => {
     setTeams((prev) =>
       prev.map((team) => ({
@@ -426,6 +474,7 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
     setAvailableMoves([]);
     setCurrentScenario(null);
     setUsedScenarioIds(new Set());
+    setShowShop(false);
   }, []);
 
   const value = useMemo(
@@ -447,6 +496,9 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
       board: BOARD_GRAPH,
       currentScenario,
       selectScenarioResponse,
+      showShop,
+      handleShopTrade,
+      handleShopSkip,
     }),
     [
       teams,
@@ -465,6 +517,9 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
       availableMoves,
       currentScenario,
       selectScenarioResponse,
+      showShop,
+      handleShopTrade,
+      handleShopSkip,
     ],
   );
 

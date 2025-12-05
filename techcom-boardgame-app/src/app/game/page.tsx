@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import BoardView from '@/components/BoardView';
 import ScenarioModal from '@/components/ScenarioModal';
+import ShopModal from '@/components/ShopModal';
 
 import { useTeams } from '../teams-context';
 
@@ -21,6 +22,9 @@ export default function GamePage() {
     board,
     currentScenario,
     selectScenarioResponse,
+    showShop,
+    handleShopTrade,
+    handleShopSkip,
   } = useTeams();
   const router = useRouter();
   const hasTeams = teams.length > 0;
@@ -154,6 +158,15 @@ export default function GamePage() {
         <ScenarioModal
           scenario={currentScenario}
           onSelectResponse={selectScenarioResponse}
+        />
+      )}
+
+      {showShop && currentTeam && (
+        <ShopModal
+          teamName={currentTeam.name}
+          currentCoins={currentTeam.coins}
+          onTrade={handleShopTrade}
+          onSkip={handleShopSkip}
         />
       )}
     </main>
