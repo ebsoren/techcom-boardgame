@@ -5,7 +5,9 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 
@@ -87,19 +89,43 @@ const createTeamId = () => {
 
 const scenarios = scenariosData as Scenario[];
 
+// Fisher-Yates shuffle algorithm to randomize array order
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 // Function to select a scenario, reducing duplication by tracking used scenarios
 const selectScenario = (usedScenarioIds: Set<string>): Scenario => {
   const unusedScenarios = scenarios.filter((s) => !usedScenarioIds.has(s.id));
   
   // If all scenarios have been used, reset and start over
+  let selectedScenario: Scenario;
   if (unusedScenarios.length === 0) {
     const randomIndex = Math.floor(Math.random() * scenarios.length);
-    return scenarios[randomIndex];
+    selectedScenario = scenarios[randomIndex];
+  } else {
+    // Select randomly from unused scenarios
+    const randomIndex = Math.floor(Math.random() * unusedScenarios.length);
+    selectedScenario = unusedScenarios[randomIndex];
   }
   
-  // Select randomly from unused scenarios
-  const randomIndex = Math.floor(Math.random() * unusedScenarios.length);
-  return unusedScenarios[randomIndex];
+  // Randomize the order of responses, but keep labels in alphabetical order
+  const shuffledResponses = shuffleArray(selectedScenario.responses);
+  const labels = ['Response A', 'Response B', 'Response C'];
+  const responsesWithOrderedLabels = shuffledResponses.map((response, index) => ({
+    ...response,
+    label: labels[index] || response.label,
+  }));
+  
+  return {
+    ...selectedScenario,
+    responses: responsesWithOrderedLabels,
+  };
 };
 
 
@@ -173,6 +199,12 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
   const [currentScenario, setCurrentScenario] = useState<Scenario | null>(null);
   const [usedScenarioIds, setUsedScenarioIds] = useState<Set<string>>(new Set());
   const [showShop, setShowShop] = useState(false);
+  const currentTeamIndexRef = useRef(0);
+  
+  // Keep ref in sync with state
+  useEffect(() => {
+    currentTeamIndexRef.current = currentTeamIndex;
+  }, [currentTeamIndex]);
 
   const addTeam = useCallback(
     (name: string) => {
@@ -386,42 +418,65 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      // Update team points and check win condition
-      setTeams((prev) => {
-        const updatedTeams = prev.map((team, index) => {
-          if (index === currentTeamIndex) {
-            const newPoints = team.points + response.points;
-            return {
-              ...team,
-              points: newPoints,
-            };
-          }
-          return team;
-        });
+      // Use ref to get the most current team index to avoid stale closure
+      const teamIndex = currentTeamIndexRef.current;
 
-        const updatedActiveTeam = updatedTeams[currentTeamIndex];
-        if (updatedActiveTeam && updatedActiveTeam.points >= 100) {
-          setGameOver(true);
-          setWinnerIds([updatedActiveTeam.id]);
-        } else {
-          // Advance to next team
-          const teamCount = prev.length;
-          setCurrentTeamIndex((prevIndex) => (prevIndex + 1) % teamCount);
+      // Read teams from closure and calculate updated teams (like moveCurrentTeam does)
+      const teamCount = teams.length;
+      if (teamCount === 0) {
+        setCurrentScenario(null);
+        return;
+      }
+
+      const activeTeam = teams[teamIndex];
+      if (!activeTeam) {
+        setCurrentScenario(null);
+        return;
+      }
+
+      // Calculate updated teams
+      const updatedTeams = teams.map((team, index) => {
+        if (index === teamIndex) {
+          const newPoints = team.points + response.points;
+          return {
+            ...team,
+            points: newPoints,
+          };
         }
-
-        return updatedTeams;
+        return team;
       });
+
+      // Update teams
+      setTeams(updatedTeams);
+
+      // Check if game is over and advance turn (like moveCurrentTeam does)
+      const updatedActiveTeam = updatedTeams[teamIndex];
+      if (updatedActiveTeam.points >= 100) {
+        setGameOver(true);
+        setWinnerIds([activeTeam.id]);
+      } else {
+        // Advance to next team (outside of setTeams, like moveCurrentTeam does)
+        setCurrentTeamIndex((prevIndex) => (prevIndex + 1) % teamCount);
+      }
 
       // Clear the scenario
       setCurrentScenario(null);
     },
-    [currentScenario, currentTeamIndex],
+    [currentScenario, teams],
   );
 
   const handleShopTrade = useCallback(() => {
+    // Use ref to get the most current team index to avoid stale closure
+    const teamIndex = currentTeamIndexRef.current;
+
     setTeams((prev) => {
+      const teamCount = prev.length;
+      if (teamCount === 0) {
+        return prev;
+      }
+
       const updatedTeams = prev.map((team, index) => {
-        if (index === currentTeamIndex) {
+        if (index === teamIndex) {
           if (team.coins >= 2) {
             return {
               ...team,
@@ -434,13 +489,12 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
         return team;
       });
 
-      const updatedActiveTeam = updatedTeams[currentTeamIndex];
+      const updatedActiveTeam = updatedTeams[teamIndex];
       if (updatedActiveTeam && updatedActiveTeam.points >= 100) {
         setGameOver(true);
         setWinnerIds([updatedActiveTeam.id]);
       } else {
         // Advance to next team
-        const teamCount = prev.length;
         setCurrentTeamIndex((prevIndex) => (prevIndex + 1) % teamCount);
       }
 
@@ -448,7 +502,7 @@ export function TeamsProvider({ children }: { children: ReactNode }) {
     });
 
     setShowShop(false);
-  }, [currentTeamIndex]);
+  }, []);
 
   const handleShopSkip = useCallback(() => {
     setShowShop(false);
