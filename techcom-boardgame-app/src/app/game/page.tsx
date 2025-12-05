@@ -25,7 +25,6 @@ export default function GamePage() {
   const router = useRouter();
   const hasTeams = teams.length > 0;
   const currentTeam = hasTeams ? teams[currentTeamIndex] : null;
-  const nodesById = board.nodesById;
 
   useEffect(() => {
     if (!hasTeams) {
@@ -55,20 +54,13 @@ export default function GamePage() {
 
   const scoreboard = useMemo(
     () =>
-      teams.map((team) => {
-        const node = nodesById[team.positionId];
-        const label = node?.label?.trim().length
-          ? node.label
-          : node
-            ? `${node.variant.charAt(0).toUpperCase()}${node.variant.slice(1)}`
-            : 'Unknown';
-        return {
-          id: team.id,
-          name: team.name,
-          label,
-        };
-      }),
-    [nodesById, teams],
+      teams.map((team) => ({
+        id: team.id,
+        name: team.name,
+        points: team.points,
+        coins: team.coins,
+      })),
+    [teams],
   );
 
   if (!hasTeams) {
@@ -137,15 +129,20 @@ export default function GamePage() {
           </div>
 
           <div className="space-y-3">
-            <h3 className="text-lg font-medium">Current Positions</h3>
+            <h3 className="text-lg font-medium">Team Stats</h3>
             <ul className="space-y-2 rounded border border-gray-200 bg-white p-4">
               {scoreboard.map((entry) => (
                 <li
                   key={entry.id}
-                  className="flex items-center justify-between text-base"
+                  className="flex flex-col gap-1 text-base"
                 >
-                  <span>{entry.name}</span>
-                  <span className="font-medium text-gray-600">{entry.label}</span>
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">{entry.name}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm text-gray-600">
+                    <span>Points: {entry.points}</span>
+                    <span>Coins: {entry.coins}</span>
+                  </div>
                 </li>
               ))}
             </ul>
